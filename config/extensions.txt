@@ -1,0 +1,23 @@
+# origen  uuid                                                  estado
+#
+# origen:  ego    = se descarga de extensions.gnome.org para la versión de GNOME instalada
+#          system = viene con paquetes del sistema (Ubuntu: gnome-shell-ubuntu-extensions,
+#                   gnome-shell-extensions); solo se habilita o deshabilita
+# estado:  enabled | disabled
+#
+# enabled-extensions y disabled-extensions se escriben exactamente con esta lista.
+
+ego     blur-my-shell@aunetx                                    enabled
+ego     color-picker@tuberry                                    enabled
+ego     just-perfection-desktop@just-perfection                 enabled
+ego     tophat@fflewddur.github.io                              enabled
+ego     advanced-media-controller@sanjai.com                    enabled
+
+system  ubuntu-dock@ubuntu.com                                  enabled
+system  tiling-assistant@ubuntu.com                             enabled
+system  ubuntu-appindicators@ubuntu.com                         enabled
+system  ding@rastersoft.com                                     enabled
+system  snapd-search-provider@canonical.com                     enabled
+system  snapd-prompting@canonical.com                           enabled
+system  web-search-provider@ubuntu.com                          enabled
+system  apps-menu@gnome-shell-extensions.gcampax.github.com     disabled

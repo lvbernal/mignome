@@ -1,0 +1,3 @@
+# nombre-del-sonido.ogg  ->  archivo del sistema al que apunta
+bell-terminal.ogg       /usr/share/sounds/gnome/default/alerts/click.ogg
+bell-window-system.ogg  /usr/share/sounds/gnome/default/alerts/click.ogg

@@ -1,0 +1,31 @@
+# Paquetes apt necesarios para la configuración.
+
+# Herramientas que usan los scripts
+dconf-cli
+curl
+unzip
+python3
+
+# Tema (Yaru: GTK, iconos, shell y sonidos)
+yaru-theme-gtk
+yaru-theme-icon
+yaru-theme-gnome-shell
+yaru-theme-sound
+
+# Fuente de interfaz y documentos (la mono se descarga en steps/20-fonts.sh)
+fonts-atkinson-hyperlegible-next
+
+# Fondo de pantalla del bloqueo de pantalla
+ubuntu-wallpapers-resolute
+
+# Extensiones: las de Ubuntu (dock, tiling, appindicators, iconos del escritorio)
+gnome-shell-ubuntu-extensions
+gnome-shell-extensions
+
+# TopHat necesita libgtop
+gir1.2-gtop-2.0
+
+# Terminal por defecto de Ubuntu (ya viene instalada); su paleta se configura en dconf/apps.ini
+ptyxis
+
+# No agregar aplicaciones aquí: la configuración no instala apps (excepto Bing Wall, en packages.snap).
