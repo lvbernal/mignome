@@ -21,6 +21,12 @@ Formato del mapa (JSON):
                                               luminosidad; "tolerance" es la diferencia máxima entre
                                               canales para considerar gris un color (0 = solo r = g = b).
                                               El blanco y el negro puros no se tiñen.
+  "skip":     ["regex", ...]                  selectores que no se re-emiten (se dejan a la hoja base y
+                                              a las extensiones). Hace falta porque el tema de User Themes
+                                              tiene más prioridad que las hojas de las extensiones: si se
+                                              re-emite una regla de Yaru que una extensión sobrescribía
+                                              (p. ej. el fondo de los íconos del dash, que Ubuntu Dock deja
+                                              transparente), la regla de Yaru vuelve a ganar.
 """
 
 import colorsys
@@ -98,6 +104,12 @@ class ColorMap:
         self.accent = spec["accent"]
         self.colors = {parse_hex(k)[0]: parse_hex(v)[0] for k, v in spec.get("colors", {}).items()}
         self.tint = spec.get("tint")
+        self.skip = [re.compile(p) for p in spec.get("skip", [])]
+
+    def keep_selectors(self, selector):
+        """Quita de una lista de selectores los que coinciden con "skip"."""
+        parts = [p for p in re.split(r"\s*,\s*", selector) if p]
+        return [p for p in parts if not any(rx.search(p) for rx in self.skip)]
 
     def map_rgb(self, rgb):
         if rgb in self.colors:
@@ -150,8 +162,12 @@ def generate(spec_path, out_path):
         spec = json.load(fh)
     cmap = ColorMap(spec)
     css, source = base_stylesheet(cmap.variant)
-    out, count = [], 0
+    out, count, skipped = [], 0, 0
     for selector, decls in rules(css):
+        selectors = cmap.keep_selectors(selector)
+        if not selectors:
+            skipped += 1
+            continue
         changed = []
         for decl in decls:
             new = COLOR_RE.sub(lambda m: cmap.replace(m.group(0)), decl)
@@ -159,13 +175,13 @@ def generate(spec_path, out_path):
                 changed.append(new)
         if changed:
             count += 1
-            out.append("%s {\n  %s; }\n" % (selector.replace(", ", ",\n"), ";\n  ".join(changed)))
+            out.append("%s {\n  %s; }\n" % (",\n".join(selectors), ";\n  ".join(changed)))
     os.makedirs(os.path.dirname(os.path.abspath(out_path)), exist_ok=True)
     with open(out_path, "w") as fh:
         fh.write("/* Generado por mignome/tools/shelltheme.py desde %s\n" % source)
         fh.write(" * con %s. No editar: se regenera al aplicar el tema. */\n\n" % os.path.basename(spec_path))
         fh.write("\n".join(out))
-    print("%d reglas sobrescritas sobre %s" % (count, source))
+    print("%d reglas sobrescritas sobre %s (%d omitidas por \"skip\")" % (count, source, skipped))
 
 
 def unmapped(spec_path):

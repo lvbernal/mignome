@@ -51,7 +51,7 @@ Al terminar, **cierra sesión y vuelve a entrar**: en Wayland, las extensiones r
 |---|---|
 | `default` | El tema actual: oscuro, acento teal, Yaru-prussiangreen-dark, paleta Horizon en Ptyxis |
 | `anniq` | Claro, con los colores de la app web anniq (tema Vuetify): fondo `#F1F8F6`, texto `#1B2528`, acento `#0D5F18`, barra lateral oscura `#0B2211`, paleta Anniq en Ptyxis y tema Anniq en VS Code y Kiro. Base del sistema: acento verde (Yaru-olive) |
-| `anniq-dark` | Variante oscura derivada de la misma paleta (Vuetify solo define el modo claro): ventana `#0B2211` (`menu-bg`), contenido `#081A0D`, barra lateral `#06140A`, texto `#F1F8F6`, acento `#9BFF2E` (`brand`), sección oscura de la paleta Anniq en Ptyxis y tema Anniq Dark en VS Code y Kiro. Base del sistema: Yaru-olive-dark |
+| `anniq-dark` | Variante oscura derivada de la misma paleta (Vuetify solo define el modo claro): ventana `#0B2211` (`menu-bg`), contenido `#081A0D`, barra lateral `#06140A`, texto `#F1F8F6`, acento `#C7FC8B` (`secondary`), sección oscura de la paleta Anniq en Ptyxis y tema Anniq Dark en VS Code y Kiro. Base del sistema: Yaru-olive-dark |
 
 Cada tema es una carpeta en `themes/`:
 
@@ -70,6 +70,7 @@ Las apps GTK4 abiertas toman el CSS nuevo al reiniciarlas; el shell cambia al in
 - **Modo claro/oscuro:** cambia de tema con `theme.sh`, no con el botón "Estilo oscuro" de los quick settings. El tema del shell se genera para la variante (clara u oscura) de su tema, y ese botón cambia la base de Yaru por debajo.
 - **Fuera de alcance:** la pantalla de inicio de sesión (GDM) no cambia, porque es del sistema y no de tu usuario.
 - **Indicadores del sistema:** los de grabación y compartir pantalla, y los avisos de batería, conservan sus colores.
+- **Dock:** los íconos del dock y el fondo del dash quedan a cargo de Ubuntu Dock (fondo transparente, según su configuración). El mapa los excluye con `skip`, porque el tema del shell tiene más prioridad que los estilos de las extensiones y, si no, les pondría fondo.
 - **Tras actualizar el sistema:** vuelve a aplicar el tema (`./theme.sh anniq`) para regenerarlo desde el Yaru nuevo. `python3 tools/shelltheme.py colors themes/anniq/gnome-shell.json` lista los colores de la hoja base que el mapa no cubre.
 
 `./export.sh` no captura las claves que define el tema (acento, esquema de color, tema GTK, iconos, paleta de Ptyxis, tema del shell), así que exportar con anniq activo no altera el tema `default`.

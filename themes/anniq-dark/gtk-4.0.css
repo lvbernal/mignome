@@ -2,7 +2,8 @@
  *
  * Variante oscura derivada de la paleta Vuetify de anniq, que solo define modo claro:
  * los fondos salen de menu-bg (#0B2211), el texto es el background claro (#F1F8F6)
- * y el acento es brand (#9BFF2E) con on-brand (#1B2528).
+ * y el acento es secondary (#C7FC8B) con texto #1B2528. Se usa secondary en vez de
+ * brand (#9BFF2E, verde lima) porque es más suave para la vista.
  *
  * Las variables de superficie solo aplican en modo oscuro, así las apps que fuerzan
  * el modo claro no se rompen.
@@ -10,18 +11,18 @@
 
 /* ── Acento: igual en ambos modos ─────────────────────────────────────── */
 :root {
-  --accent-bg-color: #9BFF2E;        /* brand */
-  --accent-fg-color: #1B2528;        /* on-brand (12.5:1) */
-  --yaru-accent-bg-color: #9BFF2E;
+  --accent-bg-color: #C7FC8B;        /* secondary */
+  --accent-fg-color: #1B2528;        /* on-secondary (13.2:1) */
+  --yaru-accent-bg-color: #C7FC8B;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     /* Acento como texto/enlaces */
-    --accent-color: #9BFF2E;               /* brand (13.4:1 sobre la ventana) */
-    --yaru-accent-color: #9BFF2E;
-    --yaru-link-color: #9BFF2E;
-    --yaru-link-visited-color: #C7FC8B;    /* secondary */
+    --accent-color: #C7FC8B;               /* secondary (14.2:1 sobre la ventana) */
+    --yaru-accent-color: #C7FC8B;
+    --yaru-link-color: #C7FC8B;
+    --yaru-link-visited-color: #E5FDCF;    /* secondary-soft */
 
     /* Superficies */
     --window-bg-color: #0B2211;            /* menu-bg */

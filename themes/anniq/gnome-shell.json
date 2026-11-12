@@ -1,7 +1,10 @@
 {
   "name": "Anniq",
   "variant": "light",
-  "accent": { "color": "#0D5F18", "fg": "#FFFFFF" },
+  "accent": {
+    "color": "#0D5F18",
+    "fg": "#FFFFFF"
+  },
   "colors": {
     "#222222": "#1B2528",
     "#f2f2f2": "#F1F8F6",
@@ -11,5 +14,13 @@
     "#c7162b": "#C62828",
     "#a14a0b": "#8A5A00"
   },
-  "tint": { "hue": 140, "saturation": 0.3, "tolerance": 8 }
+  "tint": {
+    "hue": 140,
+    "saturation": 0.3,
+    "tolerance": 8
+  },
+  "skip": [
+    "^#dash \\.dash-item-container ",
+    "^#dash \\.dash-background$"
+  ]
 }

@@ -1,7 +1,10 @@
 {
   "name": "Anniq-Dark",
   "variant": "dark",
-  "accent": { "color": "#9BFF2E", "fg": "#1B2528" },
+  "accent": {
+    "color": "#C7FC8B",
+    "fg": "#1B2528"
+  },
   "colors": {
     "#ffffff": "#F1F8F6",
     "#f2f2f2": "#F1F8F6",
@@ -17,5 +20,13 @@
     "#de1930": "#F87171",
     "#fea320": "#F5B942"
   },
-  "tint": { "hue": 140, "saturation": 0.3, "tolerance": 8 }
+  "tint": {
+    "hue": 140,
+    "saturation": 0.3,
+    "tolerance": 8
+  },
+  "skip": [
+    "^#dash \\.dash-item-container ",
+    "^#dash \\.dash-background$"
+  ]
 }

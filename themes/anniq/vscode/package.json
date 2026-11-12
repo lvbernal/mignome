@@ -2,7 +2,7 @@
   "name": "anniq-theme",
   "displayName": "Anniq",
   "description": "Temas claro y oscuro con los colores de la app web anniq (mignome).",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "publisher": "mignome",
   "license": "MIT",
   "engines": {

@@ -93,9 +93,9 @@
 @media (prefers-color-scheme: dark) {
   :root {
     /* Apps que fuerzan el modo oscuro: solo se ajusta el acento como texto. */
-    --accent-color: #9BFF2E;               /* brand (12.6:1 sobre fondo oscuro) */
-    --yaru-accent-color: #9BFF2E;
-    --yaru-link-color: #9BFF2E;
-    --yaru-link-visited-color: #C7FC8B;    /* secondary */
+    --accent-color: #C7FC8B;               /* secondary (13.4:1 sobre fondo oscuro) */
+    --yaru-accent-color: #C7FC8B;
+    --yaru-link-color: #C7FC8B;
+    --yaru-link-visited-color: #E5FDCF;    /* secondary-soft */
   }
 }
