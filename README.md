@@ -62,9 +62,17 @@ Cada tema es una carpeta en `themes/`:
 
 `anniq-dark` no duplica archivos: `Anniq.palette` y `vscode/` son enlaces simbólicos a los de `anniq`.
 
-Las apps GTK4 abiertas toman el CSS nuevo al reiniciarlas. Por ahora anniq **no cambia** el panel superior ni los menús del shell, ni las apps GTK3: muestran el verde de Yaru-olive.
+- `gnome-shell.json` (opcional): mapa de colores para el shell (panel superior, menús, quick settings, notificaciones, calendario, dash, OSD). `tools/shelltheme.py` toma la hoja de Yaru instalada (clara u oscura), reemplaza sus colores según el mapa y escribe solo las reglas que cambian en `~/.local/share/themes/<Nombre>/gnome-shell/gnome-shell.css`. La extensión User Themes carga ese CSS encima de Yaru. Como se genera al aplicar el tema, sigue a la versión de GNOME/Yaru instalada.
 
-`./export.sh` no captura las claves que define el tema (acento, esquema de color, tema GTK, iconos, paleta de Ptyxis), así que exportar con anniq activo no altera el tema `default`.
+Las apps GTK4 abiertas toman el CSS nuevo al reiniciarlas; el shell cambia al instante. Las apps GTK3 todavía muestran el verde de Yaru-olive.
+
+**Shell:**
+- **Modo claro/oscuro:** cambia de tema con `theme.sh`, no con el botón "Estilo oscuro" de los quick settings. El tema del shell se genera para la variante (clara u oscura) de su tema, y ese botón cambia la base de Yaru por debajo.
+- **Fuera de alcance:** la pantalla de inicio de sesión (GDM) no cambia, porque es del sistema y no de tu usuario.
+- **Indicadores del sistema:** los de grabación y compartir pantalla, y los avisos de batería, conservan sus colores.
+- **Tras actualizar el sistema:** vuelve a aplicar el tema (`./theme.sh anniq`) para regenerarlo desde el Yaru nuevo. `python3 tools/shelltheme.py colors themes/anniq/gnome-shell.json` lista los colores de la hoja base que el mapa no cubre.
+
+`./export.sh` no captura las claves que define el tema (acento, esquema de color, tema GTK, iconos, paleta de Ptyxis, tema del shell), así que exportar con anniq activo no altera el tema `default`.
 
 ## Qué no incluye (a propósito)
 

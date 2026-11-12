@@ -20,4 +20,5 @@ system  ding@rastersoft.com                                     enabled
 system  snapd-search-provider@canonical.com                     enabled
 system  snapd-prompting@canonical.com                           enabled
 system  web-search-provider@ubuntu.com                          enabled
+system  user-theme@gnome-shell-extensions.gcampax.github.com    enabled     # tema del shell (theme.sh)
 system  apps-menu@gnome-shell-extensions.gcampax.github.com     disabled

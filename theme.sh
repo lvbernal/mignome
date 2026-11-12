@@ -14,6 +14,9 @@
 #                   que cada editor tenía antes. Puede ser un enlace a la de otro tema.
 #   vscode-theme    etiqueta del tema de la extensión a activar (por defecto, el    opcional
 #                   primero que declara)
+#   gnome-shell.json  mapa de colores del tema del shell; el CSS se genera con     opcional
+#                   tools/shelltheme.py desde la hoja base instalada y se carga con
+#                   la extensión User Themes. Sin este archivo, el shell usa Yaru.
 set -euo pipefail
 source "$(dirname "$0")/lib/common.sh"
 
@@ -21,6 +24,8 @@ THEMES_DIR="$MIGNOME_ROOT/themes"
 STATE_FILE="${XDG_STATE_HOME:-$HOME/.local/state}/mignome/theme"
 GTK4_CSS="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-4.0/gtk.css"
 PTYXIS_PALETTES="${XDG_DATA_HOME:-$HOME/.local/share}/org.gnome.Ptyxis/palettes"
+SHELL_THEMES="${XDG_DATA_HOME:-$HOME/.local/share}/themes"
+USER_THEME="user-theme@gnome-shell-extensions.gcampax.github.com"
 MARKER="/* mignome-theme:"
 
 current_theme() { cat "$STATE_FILE" 2>/dev/null || echo default; }
@@ -73,6 +78,25 @@ apply_ptyxis() {
     info "Ptyxis usa la paleta $palette"
 }
 
+apply_shell() {
+    local dir="$THEMES_DIR/$1" name=""
+    if ! gnome-extensions info "$USER_THEME" >/dev/null 2>&1; then
+        warn "falta la extensión User Themes (paquete gnome-shell-extensions); el shell no cambia"
+        return 0
+    fi
+    if [[ -f "$dir/gnome-shell.json" ]]; then
+        name="$(python3 -c 'import json, sys; print(json.load(open(sys.argv[1]))["name"])' "$dir/gnome-shell.json")"
+        python3 "$MIGNOME_ROOT/tools/shelltheme.py" generate "$dir/gnome-shell.json" \
+            "$SHELL_THEMES/$name/gnome-shell/gnome-shell.css" | sed 's/^/    shell: /'
+        gnome-extensions enable "$USER_THEME" 2>/dev/null \
+            || warn "no se pudo habilitar User Themes ahora; se cargará al iniciar sesión"
+    fi
+    # Vaciar el nombre primero obliga a recargar el CSS aunque el nombre no cambie.
+    gsettings set org.gnome.shell.extensions.user-theme name ''
+    gsettings set org.gnome.shell.extensions.user-theme name "$name"
+    info "tema del shell: ${name:-Yaru (predeterminado)}"
+}
+
 apply_editors() {
     local dir="$THEMES_DIR/$1" editors label=()
     [[ -f "$dir/vscode-theme" ]] && label=("$(< "$dir/vscode-theme")")
@@ -97,6 +121,7 @@ apply_theme() {
     sed "s|@HOME@|$HOME|g" "$dir/interface.ini" | dconf load /
     info "acento, esquema de color, tema GTK e iconos aplicados"
     apply_gtk4_css "$theme"
+    apply_shell "$theme"
     apply_ptyxis "$theme"
     apply_editors "$theme"
     mkdir -p "$(dirname "$STATE_FILE")"
