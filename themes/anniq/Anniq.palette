@@ -1,0 +1,48 @@
+[Palette]
+Name=Anniq
+
+# Modo claro: fondo background, texto on-background, cursor primary.
+# Los colores normales son variantes oscuras legibles sobre el fondo claro;
+# los brillantes son los colores de la app (error, success, warning, info).
+[Light]
+Background=#F1F8F6
+Foreground=#1B2528
+Cursor=#0D5F18
+Color0=#1B2528
+Color1=#C62828
+Color2=#0D5F18
+Color3=#8A5A00
+Color4=#077A8C
+Color5=#7B3F9E
+Color6=#0B7A6E
+Color7=#D6E2DE
+Color8=#5F6A6C
+Color9=#EF4444
+Color10=#38B000
+Color11=#F5B942
+Color12=#0AAAC2
+Color13=#B565C9
+Color14=#2BB5A0
+Color15=#FFFFFF
+
+# Modo oscuro: fondo menu-bg, cursor brand.
+[Dark]
+Background=#0B2211
+Foreground=#E8F5EE
+Cursor=#9BFF2E
+Color0=#1B2528
+Color1=#EF4444
+Color2=#9BFF2E
+Color3=#F5B942
+Color4=#0AAAC2
+Color5=#C084FC
+Color6=#2DD4BF
+Color7=#D9E6E0
+Color8=#5F7A6A
+Color9=#F87171
+Color10=#C7FC8B
+Color11=#FBD38D
+Color12=#5FD4E6
+Color13=#D8B4FE
+Color14=#99F6E4
+Color15=#FFFFFF

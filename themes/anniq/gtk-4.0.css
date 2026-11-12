@@ -1,0 +1,101 @@
+/* Tema anniq para apps GTK4/libadwaita (libadwaita 1.9, GNOME 50).
+ *
+ * Colores tomados del tema Vuetify de la app web. Cada variable indica el color
+ * de origen. Donde el color original no se lee como texto sobre fondo claro
+ * (contraste < 4.5:1), se usa una variante más oscura del mismo tono.
+ *
+ * El tema es claro: las variables de superficie solo aplican en modo claro, así
+ * las apps que fuerzan el modo oscuro (visores de fotos y video) no se rompen.
+ */
+
+/* ── Acento: igual en ambos modos ─────────────────────────────────────── */
+:root {
+  --accent-bg-color: #0D5F18;        /* primary */
+  --accent-fg-color: #FFFFFF;        /* on-primary */
+  --yaru-accent-bg-color: #0D5F18;   /* Ubuntu: acento de Yaru dentro de libadwaita */
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    /* Acento como texto/enlaces */
+    --accent-color: #0D5F18;               /* primary (7.3:1 sobre background) */
+    --yaru-accent-color: #0D5F18;
+    --yaru-link-color: #0D5F18;
+    --yaru-link-visited-color: #0B2211;    /* menu-bg */
+
+    /* Superficies */
+    --window-bg-color: #F1F8F6;            /* background */
+    --window-fg-color: #1B2528;            /* on-background */
+    --view-bg-color: #FFFFFF;              /* surface */
+    --view-fg-color: #1B2528;              /* on-surface */
+    --card-bg-color: #FFFFFF;              /* surface */
+    --card-fg-color: #1B2528;
+    --card-shade-color: rgb(27 37 40 / 0.07);
+    --dialog-bg-color: #FFFFFF;            /* surface-bright */
+    --dialog-fg-color: #1B2528;
+    --popover-bg-color: #FFFFFF;           /* surface-bright */
+    --popover-fg-color: #1B2528;
+    --popover-shade-color: rgb(27 37 40 / 0.07);
+    --thumbnail-bg-color: #FFFFFF;
+    --thumbnail-fg-color: #1B2528;
+    --overview-bg-color: #F2F6F3;          /* surface-light */
+    --overview-fg-color: #1B2528;
+    --active-toggle-bg-color: #FFFFFF;
+    --active-toggle-fg-color: #1B2528;
+
+    /* Barra de título */
+    --headerbar-bg-color: #F1F8F6;         /* background */
+    --headerbar-fg-color: #1B2528;
+    --headerbar-backdrop-color: #F1F8F6;
+    --headerbar-border-color: #1B2528;     /* border-color */
+    --headerbar-shade-color: rgb(27 37 40 / 0.12);
+    --headerbar-darker-shade-color: rgb(27 37 40 / 0.12);
+
+    /* Barra lateral: el menú oscuro de la app (menu-bg / on-menu-bg).
+     * Para una barra lateral clara, cambia estas cinco por #F2F6F3 / #1B2528. */
+    --sidebar-bg-color: #0B2211;           /* menu-bg */
+    --sidebar-fg-color: #FFFFFF;           /* on-menu-bg */
+    --sidebar-backdrop-color: #0B2211;
+    --sidebar-border-color: rgb(0 0 6 / 0.36);
+    --sidebar-shade-color: rgb(0 0 6 / 0.25);
+
+    /* Barra lateral secundaria (vistas de tres paneles) */
+    --secondary-sidebar-bg-color: #F2F6F3; /* surface-variant */
+    --secondary-sidebar-fg-color: #1B2528; /* on-surface-variant */
+    --secondary-sidebar-backdrop-color: #F2F6F3;
+    --secondary-sidebar-border-color: rgb(27 37 40 / 0.12);
+    --secondary-sidebar-shade-color: rgb(27 37 40 / 0.07);
+
+    /* Bordes y opacidades (variables de Vuetify) */
+    --border-color: rgb(27 37 40 / 0.12);  /* border-color + border-opacity */
+    --border-opacity: 12%;                 /* border-opacity */
+    --dim-opacity: 70%;                    /* medium-emphasis-opacity */
+    --disabled-opacity: 38%;               /* disabled-opacity */
+    --shade-color: rgb(27 37 40 / 0.07);
+    --scrollbar-outline-color: #FFFFFF;
+
+    /* Estados */
+    --destructive-bg-color: #EF4444;       /* error */
+    --destructive-fg-color: #FFFFFF;       /* on-error */
+    --destructive-color: #C62828;          /* error oscurecido: 5.2:1 */
+    --error-bg-color: #EF4444;             /* error */
+    --error-fg-color: #FFFFFF;             /* on-error */
+    --error-color: #C62828;
+    --success-bg-color: #38B000;           /* success */
+    --success-fg-color: #1B2528;           /* on-success es blanco (2.9:1); se usa tinta (5.5:1) */
+    --success-color: #2B7A00;              /* success oscurecido: 5.0:1 */
+    --warning-bg-color: #F5B942;           /* warning */
+    --warning-fg-color: #1B2528;           /* on-warning es blanco (1.8:1); se usa tinta (8.9:1) */
+    --warning-color: #8A5A00;              /* warning oscurecido: 5.5:1 */
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Apps que fuerzan el modo oscuro: solo se ajusta el acento como texto. */
+    --accent-color: #9BFF2E;               /* brand (12.6:1 sobre fondo oscuro) */
+    --yaru-accent-color: #9BFF2E;
+    --yaru-link-color: #9BFF2E;
+    --yaru-link-visited-color: #C7FC8B;    /* secondary */
+  }
+}

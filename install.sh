@@ -2,7 +2,7 @@
 # Replica la configuración de GNOME en este equipo.
 #   ./install.sh                  ejecuta todos los pasos
 #   ./install.sh dconf fonts      ejecuta solo los pasos indicados
-# Pasos: packages fonts sounds extensions dconf
+# Pasos: packages fonts sounds extensions dconf theme
 set -euo pipefail
 source "$(dirname "$0")/lib/common.sh"
 
@@ -17,7 +17,7 @@ if [[ "$major" != "$MIGNOME_TESTED_GNOME" ]]; then
     [[ "$answer" =~ ^[sSyY]$ ]] || exit 1
 fi
 
-all_steps=(packages fonts sounds extensions dconf)
+all_steps=(packages fonts sounds extensions dconf theme)
 steps=("$@")
 [[ ${#steps[@]} -gt 0 ]] || steps=("${all_steps[@]}")
 

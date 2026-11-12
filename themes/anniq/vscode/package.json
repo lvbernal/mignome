@@ -1,0 +1,21 @@
+{
+  "name": "anniq-theme",
+  "displayName": "Anniq",
+  "description": "Tema claro con los colores de la app web anniq (mignome).",
+  "version": "0.1.0",
+  "publisher": "mignome",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": ["Themes"],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Anniq",
+        "uiTheme": "vs",
+        "path": "./themes/anniq-color-theme.json"
+      }
+    ]
+  }
+}

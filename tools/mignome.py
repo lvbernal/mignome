@@ -3,7 +3,7 @@
 
   export  Vuelca de este equipo las secciones dconf de la lista blanca (RULES)
           a dconf/*.ini, quitando claves personales o volátiles.
-  check   Comprueba que cada clave de dconf/*.ini exista en los esquemas
+  check   Comprueba que cada clave de dconf/*.ini y themes/*/*.ini exista en los esquemas
           GSettings instalados (incluidos los de las extensiones) y que los
           valores de tipo enum sean válidos para esta versión de GNOME.
 """
@@ -27,11 +27,15 @@ GLOBAL_EXCLUDE_KEYS = {
     "welcome-dialog-last-shown-version", "migrated-gtk-settings",
 }
 
+# Claves de org/gnome/desktop/interface que define cada tema en themes/<nombre>/interface.ini.
+THEME_KEYS = ["accent-color", "color-scheme", "gtk-theme", "icon-theme"]
+
 # Archivo de salida -> lista de reglas.
 # "path" es una sección dconf; con "/*" al final incluye la sección y todo su subárbol.
 RULES = OrderedDict([
     ("appearance.ini", [
-        {"path": "org/gnome/desktop/interface"},
+        # Acento, esquema de color, tema GTK e iconos los maneja el tema activo (themes/).
+        {"path": "org/gnome/desktop/interface", "exclude": THEME_KEYS},
         {"path": "org/gnome/desktop/background"},
         {"path": "org/gnome/desktop/screensaver"},
         {"path": "org/gnome/desktop/sound"},
@@ -79,7 +83,7 @@ RULES = OrderedDict([
          ]},
     ]),
     ("apps.ini", [
-        {"path": "org/gnome/Ptyxis/*"},
+        {"path": "org/gnome/Ptyxis/*", "exclude": ["palette"]},  # la paleta es del tema
         {"path": "org/gnome/nautilus/preferences"},
         {"path": "org/gnome/nautilus/icon-view"},
         {"path": "org/gnome/nautilus/list-view"},
@@ -194,10 +198,12 @@ def schema_index():
 def check():
     index = schema_index()
     problems = unverified = checked = 0
-    for ini in sorted(glob.glob(os.path.join(DCONF_DIR, "*.ini"))):
+    inis = sorted(glob.glob(os.path.join(DCONF_DIR, "*.ini")))
+    inis += sorted(glob.glob(os.path.join(ROOT, "themes", "*", "*.ini")))
+    for ini in inis:
         with open(ini) as fh:
             sections = parse_ini(fh.read())
-        name = os.path.basename(ini)
+        name = os.path.relpath(ini, ROOT)
         for section, keys in sections.items():
             path = "/" + section + "/"
             candidates = list(index.get(path, []))
