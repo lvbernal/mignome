@@ -11,7 +11,9 @@
 #   ptyxis-palette  nombre de la paleta del perfil por defecto de Ptyxis         opcional
 #   vscode/         extensión de tema para VS Code y Kiro; se instala en los que   opcional
 #                   estén presentes y se activa. Sin esta carpeta se restaura el tema
-#                   que cada editor tenía antes.
+#                   que cada editor tenía antes. Puede ser un enlace a la de otro tema.
+#   vscode-theme    etiqueta del tema de la extensión a activar (por defecto, el    opcional
+#                   primero que declara)
 set -euo pipefail
 source "$(dirname "$0")/lib/common.sh"
 
@@ -72,7 +74,8 @@ apply_ptyxis() {
 }
 
 apply_editors() {
-    local dir="$THEMES_DIR/$1" editors
+    local dir="$THEMES_DIR/$1" editors label=()
+    [[ -f "$dir/vscode-theme" ]] && label=("$(< "$dir/vscode-theme")")
     editors="$(python3 "$MIGNOME_ROOT/tools/vscode.py" editors)"
     if [[ -z "$editors" ]]; then
         info "ni VS Code ni Kiro están instalados; se omiten"
@@ -80,7 +83,7 @@ apply_editors() {
     fi
     for editor in $editors; do
         if [[ -f "$dir/vscode/package.json" ]]; then
-            python3 "$MIGNOME_ROOT/tools/vscode.py" apply "$editor" "$dir/vscode" | sed 's/^/    /'
+            python3 "$MIGNOME_ROOT/tools/vscode.py" apply "$editor" "$dir/vscode" "${label[@]}" | sed 's/^/    /'
         else
             python3 "$MIGNOME_ROOT/tools/vscode.py" restore-theme "$editor" | sed 's/^/    /'
         fi

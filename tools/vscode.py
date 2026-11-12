@@ -2,8 +2,9 @@
 """Temas para VS Code y sus forks (Kiro) desde theme.sh.
 
   editors                          Lista los editores soportados que están instalados.
-  apply <editor> <carpeta>         Empaqueta la extensión de tema de <carpeta>, la instala con
-                                   `<cli> --install-extension` y activa su primer tema.
+  apply <editor> <carpeta> [tema]  Empaqueta la extensión de tema de <carpeta>, la instala con
+                                   `<cli> --install-extension` y activa el tema con esa etiqueta
+                                   (por defecto, el primero que declara la extensión).
   restore-theme <editor>           Restaura el workbench.colorTheme que el editor tenía antes del
                                    primer `apply` (o quita la clave si no había). Si no hay nada
                                    guardado, no hace nada.
@@ -209,9 +210,12 @@ def restore_theme(editor):
     os.remove(editor.state)
 
 
-def apply(editor, src):
+def apply(editor, src, label=None):
     with open(os.path.join(src, "package.json")) as fh:
-        label = json.load(fh)["contributes"]["themes"][0]["label"]
+        labels = [t["label"] for t in json.load(fh)["contributes"]["themes"]]
+    label = label or labels[0]
+    if label not in labels:
+        raise SystemExit("la extensión no tiene el tema '%s' (tiene: %s)" % (label, ", ".join(labels)))
     with tempfile.TemporaryDirectory() as tmp:
         vsix = os.path.join(tmp, "theme.vsix")
         build_vsix(src, vsix)
@@ -225,8 +229,8 @@ def main():
     args = sys.argv[1:]
     if args == ["editors"]:
         print(" ".join(cli for cli in EDITORS if shutil.which(cli)))
-    elif len(args) == 3 and args[0] == "apply":
-        apply(Editor(args[1]), args[2])
+    elif len(args) in (3, 4) and args[0] == "apply":
+        apply(Editor(args[1]), args[2], args[3] if len(args) == 4 else None)
     elif len(args) == 2 and args[0] == "restore-theme":
         restore_theme(Editor(args[1]))
     elif len(args) == 3 and args[0] == "vsix":

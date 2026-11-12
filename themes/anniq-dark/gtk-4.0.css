@@ -1,0 +1,100 @@
+/* Tema anniq-dark para apps GTK4/libadwaita (libadwaita 1.9, GNOME 50).
+ *
+ * Variante oscura derivada de la paleta Vuetify de anniq, que solo define modo claro:
+ * los fondos salen de menu-bg (#0B2211), el texto es el background claro (#F1F8F6)
+ * y el acento es brand (#9BFF2E) con on-brand (#1B2528).
+ *
+ * Las variables de superficie solo aplican en modo oscuro, así las apps que fuerzan
+ * el modo claro no se rompen.
+ */
+
+/* ── Acento: igual en ambos modos ─────────────────────────────────────── */
+:root {
+  --accent-bg-color: #9BFF2E;        /* brand */
+  --accent-fg-color: #1B2528;        /* on-brand (12.5:1) */
+  --yaru-accent-bg-color: #9BFF2E;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Acento como texto/enlaces */
+    --accent-color: #9BFF2E;               /* brand (13.4:1 sobre la ventana) */
+    --yaru-accent-color: #9BFF2E;
+    --yaru-link-color: #9BFF2E;
+    --yaru-link-visited-color: #C7FC8B;    /* secondary */
+
+    /* Superficies */
+    --window-bg-color: #0B2211;            /* menu-bg */
+    --window-fg-color: #F1F8F6;            /* background del tema claro (15.6:1) */
+    --view-bg-color: #081A0D;              /* contenido: más oscuro que la ventana */
+    --view-fg-color: #F1F8F6;
+    --card-bg-color: rgb(241 248 246 / 0.06);
+    --card-fg-color: #F1F8F6;
+    --card-shade-color: rgb(0 6 2 / 0.36);
+    --dialog-bg-color: #12301A;            /* superficie elevada */
+    --dialog-fg-color: #F1F8F6;
+    --popover-bg-color: #12301A;
+    --popover-fg-color: #F1F8F6;
+    --popover-shade-color: rgb(0 6 2 / 0.25);
+    --thumbnail-bg-color: #12301A;
+    --thumbnail-fg-color: #F1F8F6;
+    --overview-bg-color: #081A0D;
+    --overview-fg-color: #F1F8F6;
+    --active-toggle-bg-color: rgb(241 248 246 / 0.2);
+    --active-toggle-fg-color: #F1F8F6;
+
+    /* Barra de título */
+    --headerbar-bg-color: #0B2211;
+    --headerbar-fg-color: #F1F8F6;
+    --headerbar-backdrop-color: #0B2211;
+    --headerbar-border-color: #F1F8F6;
+    --headerbar-shade-color: rgb(0 6 2 / 0.36);
+    --headerbar-darker-shade-color: rgb(0 6 2 / 0.9);
+
+    /* Barra lateral: el "menú", más oscuro que la ventana */
+    --sidebar-bg-color: #06140A;
+    --sidebar-fg-color: #F1F8F6;
+    --sidebar-backdrop-color: #06140A;
+    --sidebar-border-color: rgb(0 6 2 / 0.36);
+    --sidebar-shade-color: rgb(0 6 2 / 0.25);
+
+    /* Barra lateral secundaria (vistas de tres paneles) */
+    --secondary-sidebar-bg-color: #0E2915;
+    --secondary-sidebar-fg-color: #F1F8F6;
+    --secondary-sidebar-backdrop-color: #0E2915;
+    --secondary-sidebar-border-color: rgb(0 6 2 / 0.36);
+    --secondary-sidebar-shade-color: rgb(0 6 2 / 0.25);
+
+    /* Bordes y opacidades (variables de Vuetify) */
+    --border-color: rgb(241 248 246 / 0.12);
+    --border-opacity: 12%;                 /* border-opacity */
+    --dim-opacity: 70%;                    /* medium-emphasis-opacity */
+    --disabled-opacity: 38%;               /* disabled-opacity */
+    --shade-color: rgb(0 6 2 / 0.25);
+    --scrollbar-outline-color: rgb(0 6 2 / 0.5);
+
+    /* Estados: sobre fondo oscuro los colores de la app se leen como texto */
+    --destructive-bg-color: #EF4444;       /* error */
+    --destructive-fg-color: #FFFFFF;       /* on-error */
+    --destructive-color: #F87171;          /* error aclarado: 6.1:1 (el original da 4.46:1) */
+    --error-bg-color: #EF4444;
+    --error-fg-color: #FFFFFF;
+    --error-color: #F87171;
+    --success-bg-color: #38B000;           /* success */
+    --success-fg-color: #1B2528;           /* tinta (5.5:1); on-success blanco da 2.9:1 */
+    --success-color: #38B000;              /* 5.9:1 */
+    --warning-bg-color: #F5B942;           /* warning */
+    --warning-fg-color: #1B2528;           /* tinta (8.9:1) */
+    --warning-color: #F5B942;              /* 9.5:1 */
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    /* Apps que fuerzan el modo claro: solo se ajusta el acento como texto. */
+    --accent-color: #0D5F18;               /* primary (7.3:1 sobre fondo claro) */
+    --yaru-accent-color: #0D5F18;
+    --yaru-link-color: #0D5F18;
+    --yaru-link-visited-color: #0B2211;
+  }
+}

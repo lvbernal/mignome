@@ -28,7 +28,7 @@ Color15=#FFFFFF
 # Modo oscuro: fondo menu-bg, cursor brand.
 [Dark]
 Background=#0B2211
-Foreground=#E8F5EE
+Foreground=#F1F8F6
 Cursor=#9BFF2E
 Color0=#1B2528
 Color1=#EF4444
