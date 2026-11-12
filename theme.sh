@@ -9,8 +9,9 @@
 #   gtk-4.0.css     CSS para apps GTK4/libadwaita (~/.config/gtk-4.0/gtk.css)    opcional
 #   *.palette       paletas de Ptyxis que se instalan                            opcional
 #   ptyxis-palette  nombre de la paleta del perfil por defecto de Ptyxis         opcional
-#   vscode/         extensión de tema de VS Code; se instala y se activa su       opcional
-#                   tema. Sin esta carpeta se restaura el tema que VS Code tenía antes.
+#   vscode/         extensión de tema para VS Code y Kiro; se instala en los que   opcional
+#                   estén presentes y se activa. Sin esta carpeta se restaura el tema
+#                   que cada editor tenía antes.
 set -euo pipefail
 source "$(dirname "$0")/lib/common.sh"
 
@@ -70,17 +71,20 @@ apply_ptyxis() {
     info "Ptyxis usa la paleta $palette"
 }
 
-apply_vscode() {
-    local dir="$THEMES_DIR/$1"
-    if ! command -v code >/dev/null; then
-        info "VS Code no está instalado; se omite"
+apply_editors() {
+    local dir="$THEMES_DIR/$1" editors
+    editors="$(python3 "$MIGNOME_ROOT/tools/vscode.py" editors)"
+    if [[ -z "$editors" ]]; then
+        info "ni VS Code ni Kiro están instalados; se omiten"
         return 0
     fi
-    if [[ -f "$dir/vscode/package.json" ]]; then
-        python3 "$MIGNOME_ROOT/tools/vscode.py" apply "$dir/vscode" | sed 's/^/    /'
-    else
-        python3 "$MIGNOME_ROOT/tools/vscode.py" restore-theme | sed 's/^/    /'
-    fi
+    for editor in $editors; do
+        if [[ -f "$dir/vscode/package.json" ]]; then
+            python3 "$MIGNOME_ROOT/tools/vscode.py" apply "$editor" "$dir/vscode" | sed 's/^/    /'
+        else
+            python3 "$MIGNOME_ROOT/tools/vscode.py" restore-theme "$editor" | sed 's/^/    /'
+        fi
+    done
 }
 
 apply_theme() {
@@ -91,10 +95,10 @@ apply_theme() {
     info "acento, esquema de color, tema GTK e iconos aplicados"
     apply_gtk4_css "$theme"
     apply_ptyxis "$theme"
-    apply_vscode "$theme"
+    apply_editors "$theme"
     mkdir -p "$(dirname "$STATE_FILE")"
     echo "$theme" > "$STATE_FILE"
-    info "reinicia las apps GTK4 abiertas para ver el CSS nuevo (VS Code cambia solo)"
+    info "reinicia las apps GTK4 abiertas para ver el CSS nuevo (VS Code y Kiro cambian solos)"
 }
 
 if [[ $# -eq 0 ]]; then

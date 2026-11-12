@@ -1,22 +1,23 @@
 #!/usr/bin/env python3
-"""Utilidades de VS Code para theme.sh.
+"""Temas para VS Code y sus forks (Kiro) desde theme.sh.
 
-  apply <carpeta>                Empaqueta la extensión de tema de <carpeta>, la instala con
-                                 `code --install-extension` y activa su primer tema.
-  vsix <carpeta> <salida.vsix>   Empaqueta una extensión local (package.json + archivos) como VSIX.
-  set-theme <etiqueta>           Pone workbench.colorTheme en settings.json. La primera vez guarda
-                                 el valor anterior para poder restaurarlo.
-  restore-theme                  Restaura el workbench.colorTheme guardado (o quita la clave si no
-                                 había ninguna). No hace nada si no hay nada guardado.
+  editors                          Lista los editores soportados que están instalados.
+  apply <editor> <carpeta>         Empaqueta la extensión de tema de <carpeta>, la instala con
+                                   `<cli> --install-extension` y activa su primer tema.
+  restore-theme <editor>           Restaura el workbench.colorTheme que el editor tenía antes del
+                                   primer `apply` (o quita la clave si no había). Si no hay nada
+                                   guardado, no hace nada.
+  vsix <carpeta> <salida.vsix>     Empaqueta una extensión local (package.json + archivos) como VSIX.
 
 settings.json es JSONC (comentarios y comas finales), así que se edita como texto para
 conservar los comentarios, y el resultado se valida antes de escribirlo.
-Variables: MIGNOME_VSCODE_SETTINGS cambia la ruta de settings.json (útil para pruebas).
+Respeta XDG_CONFIG_HOME (settings.json) y XDG_STATE_HOME (valor anterior guardado).
 """
 
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -25,11 +26,24 @@ from xml.sax.saxutils import escape
 
 KEY = "workbench.colorTheme"
 UNSET = "__unset__"
-SETTINGS = os.environ.get("MIGNOME_VSCODE_SETTINGS") or os.path.join(
-    os.environ.get("XDG_CONFIG_HOME") or os.path.expanduser("~/.config"), "Code", "User", "settings.json")
-STATE = os.path.join(
-    os.environ.get("XDG_STATE_HOME") or os.path.expanduser("~/.local/state"),
-    "mignome", "vscode-previous-theme")
+CONFIG_HOME = os.environ.get("XDG_CONFIG_HOME") or os.path.expanduser("~/.config")
+STATE_HOME = os.environ.get("XDG_STATE_HOME") or os.path.expanduser("~/.local/state")
+
+# cli -> (nombre visible, carpeta en ~/.config)
+EDITORS = {
+    "code": ("VS Code", "Code"),
+    "kiro": ("Kiro", "Kiro"),
+}
+
+
+class Editor:
+    def __init__(self, cli):
+        if cli not in EDITORS:
+            raise SystemExit("editor desconocido: %s (soportados: %s)" % (cli, " ".join(EDITORS)))
+        self.cli = cli
+        self.name, config_dir = EDITORS[cli]
+        self.settings = os.path.join(CONFIG_HOME, config_dir, "User", "settings.json")
+        self.state = os.path.join(STATE_HOME, "mignome", "%s-previous-theme" % cli)
 
 
 # ── VSIX ──────────────────────────────────────────────────────────────────
@@ -118,25 +132,25 @@ def find_key(text):
     return None
 
 
-def read_settings():
-    if not os.path.exists(SETTINGS):
+def read_settings(path):
+    if not os.path.exists(path):
         return "{\n}\n"
-    with open(SETTINGS) as fh:
+    with open(path) as fh:
         return fh.read()
 
 
-def write_settings(text, expected):
+def write_settings(path, text, expected):
     data = parse_jsonc(text)  # lanza excepción si quedó inválido
     if data.get(KEY) != expected:
         raise RuntimeError("la edición de settings.json no produjo el valor esperado")
-    os.makedirs(os.path.dirname(SETTINGS), exist_ok=True)
-    if os.path.exists(SETTINGS):
-        with open(SETTINGS) as src, open(SETTINGS + ".mignome-bak", "w") as bak:
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    if os.path.exists(path):
+        with open(path) as src, open(path + ".mignome-bak", "w") as bak:
             bak.write(src.read())
-    tmp = SETTINGS + ".mignome-tmp"
+    tmp = path + ".mignome-tmp"
     with open(tmp, "w") as fh:
         fh.write(text)
-    os.replace(tmp, SETTINGS)
+    os.replace(tmp, path)
 
 
 def current_value(text):
@@ -169,53 +183,54 @@ def remove_value(text):
     return text[:start] + text[end:]
 
 
-def set_theme(label):
-    text = read_settings()
-    if not os.path.exists(STATE):
+def set_theme(editor, label):
+    text = read_settings(editor.settings)
+    if not os.path.exists(editor.state):
         previous = current_value(text)
-        os.makedirs(os.path.dirname(STATE), exist_ok=True)
-        with open(STATE, "w") as fh:
+        os.makedirs(os.path.dirname(editor.state), exist_ok=True)
+        with open(editor.state, "w") as fh:
             fh.write(previous if previous is not None else UNSET)
-    write_settings(set_value(text, label), label)
-    print("VS Code usa el tema %s" % label)
+    write_settings(editor.settings, set_value(text, label), label)
+    print("%s usa el tema %s" % (editor.name, label))
 
 
-def restore_theme():
-    if not os.path.exists(STATE):
+def restore_theme(editor):
+    if not os.path.exists(editor.state):
         return
-    with open(STATE) as fh:
+    with open(editor.state) as fh:
         previous = fh.read()
-    text = read_settings()
+    text = read_settings(editor.settings)
     if previous == UNSET:
-        write_settings(remove_value(text), None)
-        print("VS Code vuelve a su tema predeterminado")
+        write_settings(editor.settings, remove_value(text), None)
+        print("%s vuelve a su tema predeterminado" % editor.name)
     else:
-        write_settings(set_value(text, previous), previous)
-        print("VS Code vuelve al tema %s" % previous)
-    os.remove(STATE)
+        write_settings(editor.settings, set_value(text, previous), previous)
+        print("%s vuelve al tema %s" % (editor.name, previous))
+    os.remove(editor.state)
 
 
-def apply(src):
+def apply(editor, src):
     with open(os.path.join(src, "package.json")) as fh:
         label = json.load(fh)["contributes"]["themes"][0]["label"]
     with tempfile.TemporaryDirectory() as tmp:
         vsix = os.path.join(tmp, "theme.vsix")
         build_vsix(src, vsix)
-        subprocess.run(["code", "--install-extension", vsix, "--force"], check=True,
+        subprocess.run([editor.cli, "--install-extension", vsix, "--force"], check=True,
                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    set_theme(label)
+    print("extensión instalada en %s" % editor.name)
+    set_theme(editor, label)
 
 
 def main():
     args = sys.argv[1:]
-    if len(args) == 2 and args[0] == "apply":
-        apply(args[1])
+    if args == ["editors"]:
+        print(" ".join(cli for cli in EDITORS if shutil.which(cli)))
+    elif len(args) == 3 and args[0] == "apply":
+        apply(Editor(args[1]), args[2])
+    elif len(args) == 2 and args[0] == "restore-theme":
+        restore_theme(Editor(args[1]))
     elif len(args) == 3 and args[0] == "vsix":
         build_vsix(args[1], args[2])
-    elif len(args) == 2 and args[0] == "set-theme":
-        set_theme(args[1])
-    elif args == ["restore-theme"]:
-        restore_theme()
     else:
         print(__doc__, file=sys.stderr)
         return 2

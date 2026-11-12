@@ -50,14 +50,14 @@ Al terminar, **cierra sesión y vuelve a entrar**: en Wayland, las extensiones r
 | Tema | Qué es |
 |---|---|
 | `default` | El tema actual: oscuro, acento teal, Yaru-prussiangreen-dark, paleta Horizon en Ptyxis |
-| `anniq` | Claro, con los colores de la app web anniq (tema Vuetify): fondo `#F1F8F6`, texto `#1B2528`, acento `#0D5F18`, barra lateral oscura `#0B2211`, paleta Anniq en Ptyxis y tema Anniq en VS Code. Base del sistema: acento verde (Yaru-olive) |
+| `anniq` | Claro, con los colores de la app web anniq (tema Vuetify): fondo `#F1F8F6`, texto `#1B2528`, acento `#0D5F18`, barra lateral oscura `#0B2211`, paleta Anniq en Ptyxis y tema Anniq en VS Code y Kiro. Base del sistema: acento verde (Yaru-olive) |
 
 Cada tema es una carpeta en `themes/`:
 
 - `interface.ini`: acento, esquema claro/oscuro, tema GTK e iconos (claves dconf).
 - `gtk-4.0.css` (opcional): colores exactos para las apps GTK4/libadwaita (Archivos, Configuración, Text Editor…). Se copia a `~/.config/gtk-4.0/gtk.css`. Si ya había un `gtk.css` que no creó `theme.sh`, se respalda como `gtk.css.bak-<fecha>`.
 - `*.palette` y `ptyxis-palette` (opcional): paletas de Ptyxis que se instalan y la paleta del perfil por defecto.
-- `vscode/` (opcional): extensión de tema de VS Code. Se empaqueta como VSIX, se instala con `code --install-extension` y se activa en `settings.json`, editando solo `workbench.colorTheme` y conservando tus comentarios. El tema que tenías antes se guarda, y un tema sin `vscode/` (como `default`) lo restaura. Si VS Code no está instalado, se omite; los scripts nunca lo instalan.
+- `vscode/` (opcional): extensión de tema para VS Code y Kiro. Se empaqueta como VSIX, se instala con `code`/`kiro --install-extension` en los editores que estén presentes y se activa en el `settings.json` de cada uno, editando solo `workbench.colorTheme` y conservando tus comentarios. Se guarda el tema que tenía cada editor, y un tema sin `vscode/` (como `default`) lo restaura. Los editores que no estén instalados se omiten; los scripts nunca los instalan.
 
 Las apps GTK4 abiertas toman el CSS nuevo al reiniciarlas. Por ahora anniq **no cambia** el panel superior ni los menús del shell, ni las apps GTK3: muestran el verde de Yaru-olive.
 
