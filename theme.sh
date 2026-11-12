@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Cambia entre los temas de themes/.
 #   ./theme.sh           lista los temas y marca el activo
-#   ./theme.sh anniq     aplica el tema anniq
+#   ./theme.sh anniq-light   aplica el tema anniq-light
 #   ./theme.sh default   vuelve al tema por defecto
 #
 # Un tema es una carpeta themes/<nombre>/ con:

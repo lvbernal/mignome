@@ -1,0 +1,28 @@
+{
+  "name": "everforest-theme",
+  "displayName": "Everforest (mignome)",
+  "description": "Everforest claro y oscuro, contraste medio, con la paleta de sainnhe/everforest (mignome).",
+  "version": "0.1.0",
+  "publisher": "mignome",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Everforest Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/everforest-dark-color-theme.json"
+      },
+      {
+        "label": "Everforest Light",
+        "uiTheme": "vs",
+        "path": "./themes/everforest-light-color-theme.json"
+      }
+    ]
+  }
+}

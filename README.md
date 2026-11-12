@@ -32,7 +32,7 @@ Al terminar, **cierra sesión y vuelve a entrar**: en Wayland, las extensiones r
 
 ## Qué incluye
 
-- **Apariencia**: tema `default` (modo oscuro, acento teal, tema/iconos Yaru-prussiangreen-dark) o `anniq`, fuentes Atkinson Hyperlegible Next/Mono 11, fondo (Bing Wall) y bloqueo de pantalla, sonidos.
+- **Apariencia**: tema `default` (modo oscuro, acento teal, tema/iconos Yaru-prussiangreen-dark) o uno de los de `themes/`, fuentes Atkinson Hyperlegible Next/Mono 11, fondo (Bing Wall) y bloqueo de pantalla, sonidos.
 - **Entrada**: distribuciones latam/es/us, Bloq Num activado, desplazamiento con dos dedos.
 - **Atajos**: `Super+1..4` cambia de espacio de trabajo, `Shift+Super+1..4` mueve la ventana, `Super+A` abre la cuadrícula de apps, `Super+E` abre la carpeta personal, mosaico con Tiling Assistant (`Super+flechas`, `Super+teclado numérico`). Quitados los atajos `Super+N` de apps del dock.
 - **Escritorio**: 4 espacios de trabajo fijos, sin edge-tiling de mutter (lo maneja Tiling Assistant), No molestar, suspensión desactivada, bloqueo a los 5 min, sin envío de informes de errores, recordatorios de descanso.
@@ -42,16 +42,18 @@ Al terminar, **cierra sesión y vuelve a entrar**: en Wayland, las extensiones r
 ## Temas
 
 ```bash
-./theme.sh           # lista los temas; * marca el activo
-./theme.sh anniq     # cambia a anniq
-./theme.sh default   # vuelve al tema por defecto
+./theme.sh               # lista los temas; * marca el activo
+./theme.sh anniq-light   # cambia a anniq-light
+./theme.sh default       # vuelve al tema por defecto
 ```
 
 | Tema | Qué es |
 |---|---|
 | `default` | El tema actual: oscuro, acento teal, Yaru-prussiangreen-dark, paleta Horizon en Ptyxis |
-| `anniq` | Claro, con los colores de la app web anniq (tema Vuetify): fondo `#F1F8F6`, texto `#1B2528`, acento `#0D5F18`, barra lateral oscura `#0B2211`, paleta Anniq en Ptyxis y tema Anniq en VS Code y Kiro. Base del sistema: acento verde (Yaru-olive) |
+| `anniq-light` | Claro, con los colores de la app web anniq (tema Vuetify): fondo `#F1F8F6`, texto `#1B2528`, acento `#0D5F18`, barra lateral oscura `#0B2211`, paleta Anniq en Ptyxis y tema Anniq en VS Code y Kiro. Base del sistema: acento verde (Yaru-olive) |
 | `anniq-dark` | Variante oscura derivada de la misma paleta (Vuetify solo define el modo claro): ventana `#0B2211` (`menu-bg`), contenido `#081A0D`, barra lateral `#06140A`, texto `#F1F8F6`, acento `#C7FC8B` (`secondary`), sección oscura de la paleta Anniq en Ptyxis y tema Anniq Dark en VS Code y Kiro. Base del sistema: Yaru-olive-dark |
+| `everforest-dark` | [Everforest](https://github.com/sainnhe/everforest) oscuro, contraste medio: ventana `#2D353B` (`bg0`), contenido `#232A2E` (`bg_dim`), barras `#343F44` (`bg1`), texto `#D3C6AA`, acento `#A7C080` (`green`), paleta Everforest de Ptyxis (ya viene con Ptyxis) y tema Everforest Dark en VS Code y Kiro. Base del sistema: Yaru-olive-dark |
+| `everforest-light` | Everforest claro, contraste medio: ventana `#FDF6E3` (`bg0`), contenido `#FFFBEF`, barra lateral `#EFEBD4`, texto `#5C6A72`, acento `#8DA101` con texto oscuro. Los colores de Everforest claro no llegan a 4.5:1 como texto, así que enlaces y estados usan una versión oscurecida del mismo tono (p. ej. `#677618` para el verde). Panel superior oscuro (`#2D353B`), como en Yaru. Paleta Everforest de Ptyxis y tema Everforest Light en VS Code y Kiro. Base del sistema: Yaru-olive |
 
 Cada tema es una carpeta en `themes/`:
 
@@ -60,7 +62,7 @@ Cada tema es una carpeta en `themes/`:
 - `*.palette` y `ptyxis-palette` (opcional): paletas de Ptyxis que se instalan y la paleta del perfil por defecto.
 - `vscode/` (opcional): extensión de tema para VS Code y Kiro. Se empaqueta como VSIX, se instala con `code`/`kiro --install-extension` en los editores que estén presentes y se activa en el `settings.json` de cada uno, editando solo `workbench.colorTheme` y conservando tus comentarios. Se guarda el tema que tenía cada editor, y un tema sin `vscode/` (como `default`) lo restaura. Los editores que no estén instalados se omiten; los scripts nunca los instalan. La extensión trae los dos temas (Anniq y Anniq Dark), y `vscode-theme` indica cuál activar.
 
-`anniq-dark` no duplica archivos: `Anniq.palette` y `vscode/` son enlaces simbólicos a los de `anniq`.
+`anniq-dark` no duplica archivos: `Anniq.palette` y `vscode/` son enlaces simbólicos a los de `anniq-light`. Igual, `everforest-light/vscode` es un enlace a la extensión de `everforest-dark`, que trae los dos temas.
 
 - `gnome-shell.json` (opcional): mapa de colores para el shell (panel superior, menús, quick settings, notificaciones, calendario, dash, OSD). `tools/shelltheme.py` toma la hoja de Yaru instalada (clara u oscura), reemplaza sus colores según el mapa y escribe solo las reglas que cambian en `~/.local/share/themes/<Nombre>/gnome-shell/gnome-shell.css`. La extensión User Themes carga ese CSS encima de Yaru. Como se genera al aplicar el tema, sigue a la versión de GNOME/Yaru instalada.
 
@@ -71,9 +73,9 @@ Las apps GTK4 abiertas toman el CSS nuevo al reiniciarlas; el shell cambia al in
 - **Fuera de alcance:** la pantalla de inicio de sesión (GDM) no cambia, porque es del sistema y no de tu usuario.
 - **Indicadores del sistema:** los de grabación y compartir pantalla, y los avisos de batería, conservan sus colores.
 - **Dock:** los íconos del dock y el fondo del dash quedan a cargo de Ubuntu Dock (fondo transparente, según su configuración). El mapa los excluye con `skip`, porque el tema del shell tiene más prioridad que los estilos de las extensiones y, si no, les pondría fondo.
-- **Tras actualizar el sistema:** vuelve a aplicar el tema (`./theme.sh anniq`) para regenerarlo desde el Yaru nuevo. `python3 tools/shelltheme.py colors themes/anniq/gnome-shell.json` lista los colores de la hoja base que el mapa no cubre.
+- **Tras actualizar el sistema:** vuelve a aplicar el tema (`./theme.sh anniq-light`) para regenerarlo desde el Yaru nuevo. `python3 tools/shelltheme.py colors themes/anniq-light/gnome-shell.json` lista los colores de la hoja base que el mapa no cubre.
 
-`./export.sh` no captura las claves que define el tema (acento, esquema de color, tema GTK, iconos, paleta de Ptyxis, tema del shell), así que exportar con anniq activo no altera el tema `default`.
+`./export.sh` no captura las claves que define el tema (acento, esquema de color, tema GTK, iconos, paleta de Ptyxis, tema del shell), así que exportar con anniq-light activo no altera el tema `default`.
 
 ## Qué no incluye (a propósito)
 

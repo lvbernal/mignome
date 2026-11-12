@@ -1,0 +1,99 @@
+/* Tema everforest-dark para apps GTK4/libadwaita (libadwaita 1.9, GNOME 50).
+ *
+ * Everforest oscuro, contraste medio (sainnhe/everforest, MIT). Escalera de fondos:
+ *   bg_dim #232A2E < bg0 #2D353B < bg1 #343F44 < bg2 #3D484D < bg3 #475258
+ * Texto fg #D3C6AA. Acento green #A7C080 con texto bg0 (6.2:1).
+ * Sigue la jerarquía de libadwaita: contenido más oscuro que la ventana, barras y
+ * diálogos más claros.
+ *
+ * Las variables de superficie solo aplican en modo oscuro, así las apps que fuerzan
+ * el modo claro no se rompen.
+ */
+
+/* ── Acento: igual en ambos modos ─────────────────────────────────────── */
+:root {
+  --accent-bg-color: #A7C080;        /* green */
+  --accent-fg-color: #2D353B;        /* bg0 (6.2:1) */
+  --yaru-accent-bg-color: #A7C080;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Acento como texto/enlaces */
+    --accent-color: #A7C080;               /* green (6.2:1 sobre bg0) */
+    --yaru-accent-color: #A7C080;
+    --yaru-link-color: #A7C080;
+    --yaru-link-visited-color: #83C092;    /* aqua */
+
+    /* Superficies */
+    --window-bg-color: #2D353B;            /* bg0 */
+    --window-fg-color: #D3C6AA;            /* fg (7.4:1) */
+    --view-bg-color: #232A2E;              /* bg_dim: contenido más oscuro que la ventana */
+    --view-fg-color: #D3C6AA;
+    --card-bg-color: rgb(211 198 170 / 0.06);
+    --card-fg-color: #D3C6AA;
+    --card-shade-color: rgb(23 28 31 / 0.36);
+    --dialog-bg-color: #3D484D;            /* bg2 */
+    --dialog-fg-color: #D3C6AA;
+    --popover-bg-color: #3D484D;           /* bg2 */
+    --popover-fg-color: #D3C6AA;
+    --popover-shade-color: rgb(23 28 31 / 0.25);
+    --thumbnail-bg-color: #3D484D;
+    --thumbnail-fg-color: #D3C6AA;
+    --overview-bg-color: #232A2E;
+    --overview-fg-color: #D3C6AA;
+    --active-toggle-bg-color: rgb(211 198 170 / 0.2);
+    --active-toggle-fg-color: #D3C6AA;
+
+    /* Barra de título */
+    --headerbar-bg-color: #343F44;         /* bg1 */
+    --headerbar-fg-color: #D3C6AA;
+    --headerbar-backdrop-color: #2D353B;
+    --headerbar-border-color: #D3C6AA;
+    --headerbar-shade-color: rgb(23 28 31 / 0.36);
+    --headerbar-darker-shade-color: rgb(23 28 31 / 0.9);
+
+    /* Barra lateral */
+    --sidebar-bg-color: #343F44;           /* bg1 */
+    --sidebar-fg-color: #D3C6AA;
+    --sidebar-backdrop-color: #2D353B;
+    --sidebar-border-color: rgb(23 28 31 / 0.36);
+    --sidebar-shade-color: rgb(23 28 31 / 0.25);
+
+    /* Barra lateral secundaria (vistas de tres paneles) */
+    --secondary-sidebar-bg-color: #30393E; /* entre bg0 y bg1 */
+    --secondary-sidebar-fg-color: #D3C6AA;
+    --secondary-sidebar-backdrop-color: #2D353B;
+    --secondary-sidebar-border-color: rgb(23 28 31 / 0.36);
+    --secondary-sidebar-shade-color: rgb(23 28 31 / 0.25);
+
+    /* Bordes y sombras */
+    --border-color: rgb(211 198 170 / 0.15);
+    --shade-color: rgb(23 28 31 / 0.25);
+    --scrollbar-outline-color: rgb(23 28 31 / 0.5);
+
+    /* Estados: los colores de Everforest con texto bg0 */
+    --destructive-bg-color: #E67E80;       /* red */
+    --destructive-fg-color: #2D353B;       /* bg0 (4.6:1) */
+    --destructive-color: #E67E80;          /* 4.6:1 sobre bg0 */
+    --error-bg-color: #E67E80;
+    --error-fg-color: #2D353B;
+    --error-color: #E67E80;
+    --success-bg-color: #A7C080;           /* green */
+    --success-fg-color: #2D353B;           /* 6.2:1 */
+    --success-color: #A7C080;
+    --warning-bg-color: #DBBC7F;           /* yellow */
+    --warning-fg-color: #2D353B;           /* 6.8:1 */
+    --warning-color: #DBBC7F;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    /* Apps que fuerzan el modo claro: solo se ajusta el acento como texto. */
+    --accent-color: #677618;               /* green claro oscurecido (4.7:1 sobre fondo claro) */
+    --yaru-accent-color: #677618;
+    --yaru-link-color: #677618;
+    --yaru-link-visited-color: #327962;    /* aqua claro oscurecido */
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "Everforest-Dark",
+  "variant": "dark",
+  "accent": {
+    "color": "#A7C080",
+    "fg": "#2D353B"
+  },
+  "colors": {
+    "#ffffff": "#D3C6AA",
+    "#f2f2f2": "#D3C6AA",
+    "#000000": "#1E2326",
+    "#131313": "#232A2E",
+    "#222222": "#2D353B",
+    "#2f2f2f": "#343F44",
+    "#36363a": "#343F44",
+    "#373737": "#3D484D",
+    "#47474c": "#475258",
+    "#4d4d4d": "#475258",
+    "#54545a": "#4F585E"
+  },
+  "tint": {
+    "hue": 180,
+    "saturation": 0.08,
+    "tolerance": 8
+  },
+  "skip": [
+    "^#dash \\.dash-item-container ",
+    "^#dash \\.dash-background$"
+  ]
+}
