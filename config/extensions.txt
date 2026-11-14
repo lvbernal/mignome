@@ -12,9 +12,8 @@ ego     color-picker@tuberry                                    enabled
 ego     just-perfection-desktop@just-perfection                 enabled
 ego     tophat@fflewddur.github.io                              enabled
 ego     advanced-media-controller@sanjai.com                    enabled
-ego     dash2dock-lite@icedman.github.com                       enabled     # dock con magnificación (reemplaza a Ubuntu Dock)
 
-system  ubuntu-dock@ubuntu.com                                  disabled    # choca con Dash2Dock Animated
+system  ubuntu-dock@ubuntu.com                                  enabled
 system  tiling-assistant@ubuntu.com                             enabled
 system  ubuntu-appindicators@ubuntu.com                         enabled
 system  ding@rastersoft.com                                     enabled

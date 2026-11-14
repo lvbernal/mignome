@@ -37,7 +37,7 @@ Al terminar, **cierra sesión y vuelve a entrar**: en Wayland, las extensiones r
 - **Entrada**: distribuciones latam/es/us, Bloq Num activado, desplazamiento con dos dedos.
 - **Atajos**: `Super+1..4` cambia de espacio de trabajo, `Shift+Super+1..4` mueve la ventana, `Super+A` abre la cuadrícula de apps, `Super+E` abre la carpeta personal, mosaico con Tiling Assistant (`Super+flechas`, `Super+teclado numérico`). Quitados los atajos `Super+N` de apps del dock.
 - **Escritorio**: 4 espacios de trabajo fijos, sin edge-tiling de mutter (lo maneja Tiling Assistant), No molestar, suspensión desactivada, bloqueo a los 5 min, sin envío de informes de errores, recordatorios de descanso.
-- **Extensiones**: Blur my Shell, Color Picker, Just Perfection, TopHat, Advanced Media Controller, Dash2Dock Animated (dock con magnificación al estilo macOS; reemplaza a Ubuntu Dock, que queda deshabilitado) y las de Ubuntu (Tiling Assistant, AppIndicators, iconos del escritorio), con su configuración.
+- **Extensiones**: Blur my Shell, Color Picker, Just Perfection, TopHat, Advanced Media Controller y las de Ubuntu (dock, Tiling Assistant, AppIndicators, iconos del escritorio), con su configuración.
 - **Apps**: paleta del tema y tamaño de ventana en Ptyxis, vista de iconos en Nautilus, Text Editor sin restaurar sesión.
 
 ## Temas
@@ -74,7 +74,7 @@ Las apps GTK4 abiertas toman el CSS nuevo al reiniciarlas; el shell cambia al in
 - **Modo claro/oscuro:** cambia de tema con `theme.sh`, no con el botón "Estilo oscuro" de los quick settings. El tema del shell se genera para la variante (clara u oscura) de su tema, y ese botón cambia la base de Yaru por debajo.
 - **Fuera de alcance:** la pantalla de inicio de sesión (GDM) no cambia, porque es del sistema y no de tu usuario.
 - **Indicadores del sistema:** los de grabación y compartir pantalla, y los avisos de batería, conservan sus colores.
-- **Dock:** los íconos del dock y el fondo del dash quedan a cargo de la extensión del dock (Dash2Dock Animated, con fondo transparente según su configuración). El mapa los excluye con `skip`, porque el tema del shell tiene más prioridad que los estilos de las extensiones y, si no, les pondría fondo.
+- **Dock:** los íconos del dock y el fondo del dash quedan a cargo de Ubuntu Dock (fondo transparente, según su configuración). El mapa los excluye con `skip`, porque el tema del shell tiene más prioridad que los estilos de las extensiones y, si no, les pondría fondo.
 - **Tras actualizar el sistema:** vuelve a aplicar el tema (`./theme.sh anniq-light`) para regenerarlo desde el Yaru nuevo. `python3 tools/shelltheme.py colors themes/anniq-light/gnome-shell.json` lista los colores de la hoja base que el mapa no cubre.
 
 `./export.sh` no captura las claves que define el tema (acento, esquema de color, tema GTK, iconos, paleta de Ptyxis, tema del shell), así que exportar con anniq-light activo no altera el tema `default`.

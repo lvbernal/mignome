@@ -80,6 +80,7 @@ RULES = OrderedDict([
          ],
          "exclude_sections": [
              "org/gnome/shell/extensions/vicinae",
+             "org/gnome/shell/extensions/dash2dock-lite",  # se probó y se quitó; el dock es Ubuntu Dock
              "org/gnome/shell/extensions/user-theme",  # el nombre lo pone el tema activo
          ]},
     ]),
