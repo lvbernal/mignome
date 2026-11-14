@@ -29,6 +29,30 @@ install_from_ego() {
     info "$uuid instalada"
 }
 
+# Aplica patches/<uuid>/*.patch a la extensión instalada. Es idempotente: un parche ya
+# aplicado se omite, y uno que no encaja (la extensión cambió de versión) solo avisa.
+apply_patches() {
+    local dir uuid ext p name
+    for dir in "$MIGNOME_ROOT"/patches/*/; do
+        [[ -d "$dir" ]] || continue
+        uuid="$(basename "$dir")"
+        ext="$HOME/.local/share/gnome-shell/extensions/$uuid"
+        [[ -d "$ext" ]] || continue
+        for p in "$dir"*.patch; do
+            [[ -f "$p" ]] || continue
+            name="$uuid/$(basename "$p")"
+            if patch -d "$ext" -p1 -R -f -s --fuzz=0 --dry-run <"$p" >/dev/null 2>&1; then
+                info "parche $name ya aplicado"
+            elif patch -d "$ext" -p1 -N -f -s --fuzz=0 --dry-run <"$p" >/dev/null 2>&1; then
+                patch -d "$ext" -p1 -N -f -s --fuzz=0 --no-backup-if-mismatch <"$p"
+                info "parche $name aplicado"
+            else
+                warn "el parche $name no encaja con la versión instalada; se omite"
+            fi
+        done
+    done
+}
+
 log "Extensiones (GNOME $shell_version)"
 enabled=()
 disabled=()
@@ -43,6 +67,7 @@ while read -r source uuid state; do
         disabled) disabled+=("'$uuid'") ;;
     esac
 done < <(read_list "$CONF")
+apply_patches
 
 join() { local IFS=,; echo "[$*]"; }
 gsettings set org.gnome.shell disable-user-extensions false

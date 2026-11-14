@@ -1,0 +1,24 @@
+[Palette]
+Name=EyesDark
+
+# Una sola variante (sin [Light]/[Dark]): Ptyxis la usa en ambos modos.
+# Fondo bg0, texto fg (10.9:1), cursor ámbar. Normales a ~7.5:1, brillantes a ~9.5:1.
+Background=#211D1A
+Foreground=#D9D0C1
+Cursor=#D3A974
+Color0=#44403C
+Color1=#DE958E
+Color2=#9EBC8F
+Color3=#C1B176
+Color4=#8EB8CE
+Color5=#C5A4C6
+Color6=#89BEAF
+Color7=#B1AA9E
+Color8=#928B82
+Color9=#F4B0AA
+Color10=#B6D1A8
+Color11=#D6C792
+Color12=#A8CEE2
+Color13=#DABCDB
+Color14=#A3D3C5
+Color15=#ECE3D6

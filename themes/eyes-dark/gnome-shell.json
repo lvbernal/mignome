@@ -1,0 +1,30 @@
+{
+  "name": "Eyes-Dark",
+  "variant": "dark",
+  "accent": {
+    "color": "#D3A974",
+    "fg": "#211D1A"
+  },
+  "colors": {
+    "#ffffff": "#D9D0C1",
+    "#f2f2f2": "#D9D0C1",
+    "#000000": "#120F0C",
+    "#131313": "#1A1713",
+    "#222222": "#211D1A",
+    "#2f2f2f": "#282521",
+    "#36363a": "#282521",
+    "#373737": "#302C28",
+    "#47474c": "#3A3632",
+    "#4d4d4d": "#3A3632",
+    "#54545a": "#44403C"
+  },
+  "tint": {
+    "hue": 35,
+    "saturation": 0.1,
+    "tolerance": 8
+  },
+  "skip": [
+    "^#dash \\.dash-item-container ",
+    "^#dash \\.dash-background$"
+  ]
+}

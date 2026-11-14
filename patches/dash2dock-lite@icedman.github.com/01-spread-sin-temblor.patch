@@ -1,0 +1,25 @@
+Dash2Dock Animated: magnificación sin temblor.
+
+Al separar los íconos vecinos del ícono ampliado, el desplazamiento se redondeaba
+con Math.floor y solo se sumaba cuando la escala pasaba de 1.1. Las dos cosas
+producen saltos de 1 a 2 px que van y vienen mientras el puntero se mueve, sobre
+todo despacio. Sin el redondeo y sin el umbral, el desplazamiento es continuo.
+
+--- a/animator.js
++++ b/animator.js
+@@ -377,11 +377,11 @@
+       // }
+ 
+       let scale = icon._scale;
+-      if (scale > 1.1) {
++      if (scale > 1) {
+         // affect spread
+-        let offset = Math.floor(
+-          1.25 * (scale - 1) * iconSize * scaleFactor * spread * 0.5
+-        );
++        // mignome: sin Math.floor ni umbral 1.1, que hacían temblar los íconos
++        let offset =
++          1.25 * (scale - 1) * iconSize * scaleFactor * spread * 0.5;
+         // left
+         for (let j = i - 1; j >= 0; j--) {
+           let left = iconTable[j];

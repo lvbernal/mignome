@@ -1,0 +1,23 @@
+{
+  "name": "eyes-dark-theme",
+  "displayName": "Eyes Dark (mignome)",
+  "description": "Tema oscuro de colores cálidos y apagados para reducir la fatiga visual (mignome).",
+  "version": "0.1.0",
+  "publisher": "mignome",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Eyes Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/eyes-dark-color-theme.json"
+      }
+    ]
+  }
+}

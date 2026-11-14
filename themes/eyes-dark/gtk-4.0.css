@@ -1,0 +1,104 @@
+/* Tema eyes-dark para apps GTK4/libadwaita (libadwaita 1.9, GNOME 50).
+ *
+ * Oscuro pensado para reducir la fatiga visual:
+ *   - Fondos marrón cálido, nunca negro puro (menos halo alrededor del texto).
+ *   - Texto crema #D9D0C1 a 10.9:1: por encima de AAA (7:1) sin el deslumbramiento
+ *     del blanco puro sobre negro (~19:1).
+ *   - Acentos de croma bajo y tonos cálidos (menos luz azul, sin colores que "vibran").
+ * Escalera de fondos (OKLCH, tono 70):
+ *   bg_dim #1A1713 < bg0 #211D1A < bg1 #282521 < bg2 #302C28 < bg3 #3A3632
+ * Acento ámbar #D3A974 con texto bg0 (7.7:1).
+ * Sigue la jerarquía de libadwaita: contenido más oscuro que la ventana, barras y
+ * diálogos más claros.
+ *
+ * Las variables de superficie solo aplican en modo oscuro, así las apps que fuerzan
+ * el modo claro no se rompen.
+ */
+
+/* ── Acento: igual en ambos modos ─────────────────────────────────────── */
+:root {
+  --accent-bg-color: #D3A974;        /* ámbar */
+  --accent-fg-color: #211D1A;        /* bg0 (7.7:1) */
+  --yaru-accent-bg-color: #D3A974;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Acento como texto/enlaces */
+    --accent-color: #D3A974;               /* ámbar (7.7:1 sobre bg0) */
+    --yaru-accent-color: #D3A974;
+    --yaru-link-color: #8EB8CE;            /* azul apagado (7.9:1): enlaces distintos del acento */
+    --yaru-link-visited-color: #C5A4C6;    /* malva (7.6:1) */
+
+    /* Superficies */
+    --window-bg-color: #211D1A;            /* bg0 */
+    --window-fg-color: #D9D0C1;            /* fg (10.9:1) */
+    --view-bg-color: #1A1713;              /* bg_dim: contenido más oscuro que la ventana */
+    --view-fg-color: #D9D0C1;
+    --card-bg-color: rgb(217 208 193 / 0.05);
+    --card-fg-color: #D9D0C1;
+    --card-shade-color: rgb(13 11 8 / 0.36);
+    --dialog-bg-color: #302C28;            /* bg2 */
+    --dialog-fg-color: #D9D0C1;
+    --popover-bg-color: #302C28;           /* bg2 */
+    --popover-fg-color: #D9D0C1;
+    --popover-shade-color: rgb(13 11 8 / 0.25);
+    --thumbnail-bg-color: #302C28;
+    --thumbnail-fg-color: #D9D0C1;
+    --overview-bg-color: #1A1713;
+    --overview-fg-color: #D9D0C1;
+    --active-toggle-bg-color: rgb(217 208 193 / 0.18);
+    --active-toggle-fg-color: #D9D0C1;
+
+    /* Barra de título */
+    --headerbar-bg-color: #282521;         /* bg1 */
+    --headerbar-fg-color: #D9D0C1;
+    --headerbar-backdrop-color: #211D1A;
+    --headerbar-border-color: #D9D0C1;
+    --headerbar-shade-color: rgb(13 11 8 / 0.36);
+    --headerbar-darker-shade-color: rgb(13 11 8 / 0.9);
+
+    /* Barra lateral */
+    --sidebar-bg-color: #282521;           /* bg1 */
+    --sidebar-fg-color: #D9D0C1;
+    --sidebar-backdrop-color: #211D1A;
+    --sidebar-border-color: rgb(13 11 8 / 0.36);
+    --sidebar-shade-color: rgb(13 11 8 / 0.25);
+
+    /* Barra lateral secundaria (vistas de tres paneles) */
+    --secondary-sidebar-bg-color: #24211D; /* entre bg0 y bg1 */
+    --secondary-sidebar-fg-color: #D9D0C1;
+    --secondary-sidebar-backdrop-color: #211D1A;
+    --secondary-sidebar-border-color: rgb(13 11 8 / 0.36);
+    --secondary-sidebar-shade-color: rgb(13 11 8 / 0.25);
+
+    /* Bordes y sombras */
+    --border-color: rgb(217 208 193 / 0.14);
+    --shade-color: rgb(13 11 8 / 0.25);
+    --scrollbar-outline-color: rgb(13 11 8 / 0.5);
+
+    /* Estados: colores apagados con texto bg0 */
+    --destructive-bg-color: #DE958E;       /* rojo */
+    --destructive-fg-color: #211D1A;       /* bg0 (7.0:1) */
+    --destructive-color: #DE958E;          /* 7.0:1 sobre bg0 */
+    --error-bg-color: #DE958E;
+    --error-fg-color: #211D1A;
+    --error-color: #DE958E;
+    --success-bg-color: #9EBC8F;           /* verde salvia */
+    --success-fg-color: #211D1A;           /* 8.0:1 */
+    --success-color: #9EBC8F;
+    --warning-bg-color: #C1B176;           /* amarillo */
+    --warning-fg-color: #211D1A;           /* 7.8:1 */
+    --warning-color: #C1B176;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    /* Apps que fuerzan el modo claro: solo se ajusta el acento como texto. */
+    --accent-color: #835A20;               /* ámbar oscurecido (5.8:1 sobre fondo claro) */
+    --yaru-accent-color: #835A20;
+    --yaru-link-color: #356A84;            /* azul oscurecido (5.7:1) */
+    --yaru-link-visited-color: #835A20;
+  }
+}

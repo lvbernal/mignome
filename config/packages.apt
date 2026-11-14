@@ -5,6 +5,7 @@ dconf-cli
 curl
 unzip
 python3
+patch
 
 # Tema (Yaru: GTK, iconos, shell y sonidos)
 yaru-theme-gtk
